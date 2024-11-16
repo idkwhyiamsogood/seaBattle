@@ -1,66 +1,3 @@
-* {
-  font-weight: 600;
-  font-size: 20pt;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: url("../assets/imgs/background.avif");
-  height: 100vh;
-  counter-reset: counter;
-}
-
-input {
-  all: unset;
-  border: 1px solid black;
-  padding: 10px;
-  border-radius: 30px;
-  box-shadow: 1px 1px 2px;
-}
-
-label {
-  text-align: center;
-}
-
-#main {
-  display: flex;
-  gap: 30px;
-  margin-bottom: 20px;
-  justify-content: center;
-  align-items: center;
-}
-
-.law-text {
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
-
-table {
-  border-collapse: collapse;
-  margin: 10px;
-}
-
-td {
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  border: 2px solid #000;
-  font-size: 24px; /* Увеличиваем шрифт для символов */
-}
-
-td {
-  cursor: pointer;
-  background-color: #f9f9f9;
-}
-
-td:hover {
-  background-color: rgba(0, 0, 0, 0.4); /* Цвет при наведении */
-}
-
 button {
   padding: 15px 30px;
   border: 1px solid gray;
@@ -80,21 +17,18 @@ button:active {
   transform: scale(1.1);
   transition: 0.2s;
 }
-.selected {
-  transition: 0.2s;
+
+.untouchable {
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.6);
 }
 
-.selected::after {
-  content: counter(counter);
-  counter-increment: counter;
-}
-
-.selected:hover:active::after {
-  transition: 0.1s;
-}
-
-*:hover::after {
-  color: red;
+.button-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .battlefield td.shot,
@@ -115,195 +49,34 @@ td.miss {
   content: "*";
 }
 
-.button-container {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
+table {
+  border-collapse: collapse;
+  margin: 10px;
 }
 
-.hidden {
-  display: none;
-}
-
-.counter {
-  flex-direction: column;
-  width: max-content;
-  padding: 25px;
-  gap: 10px;
-  display: none;
-}
-
-.untouchable {
-  pointer-events: none;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-.modalBackground {
-  background: rgba(0,0,0,0.3);
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 2;
-  align-items: center;
-  justify-content: center;
-  display: none;
-}
-
-.modalActive {
-  display: grid; 
-  grid-template-columns: 1fr; 
-  grid-template-rows: max-content 1fr; 
-  grid-template-areas: 
-    "modalClose"
-    "modal-container"; 
-
-  width: max-content;
-  min-width: 320px;
-  max-width: 60vw;
-
-  height: max-content;
-  min-height: 500px;
-
-  border-radius: 10px;
-  padding: 40px 20px;
-
-  border: 2px solid black;
-  border-radius: 45px;
-
+td {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border: 2px solid #000;
+  font-size: 24px;
   background-color: white;
+} 
+
+td:hover {
+  background-color: rgba(0, 0, 0, 0.4); /* Цвет при наведении */
 }
 
-.modalClose {
-  font-family: var(--font-regular);
-  width: 100%;
-  height: max-content;
-
-  grid-area: modalClose;
-  display: flex;
-  justify-content: end;
+label {
+  text-align: center;
 }
 
-.modalClose img {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
-
-.modalWindow {
-  position: relative;
-}
-
-.modal-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-
-  grid-area: modal-container;
-  justify-self: center; 
-  align-self: center; 
-}
-
-.saveModal {
-  margin-top: 50px;
-}
-
-.counter-container {
-  display: flex;
-  gap: 10px;
-}
-
-.ship-container {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.ship {
-  display: none;
-  border: 3px solid blue;
-  background: rgba(0, 0, 255, 0.1);
-}
-
-.hidden-text {
-  display: none;
-}
-
-#ship-1 {
-  width: calc(40px * 1);
-  height: calc(40px * 1);
-}
-
-#ship-1-vertical {
-  width: calc(40px * 1);
-  height: calc(40px * 1);
-}
-
-#ship-2 {
-  width: calc(40px * 2);
-  height: calc(40px * 1);
-}
-
-#ship-2-vertical {
-  width: calc(40px * 1);
-  height: calc(40px * 2);
-}
-
-#ship-3 {
-  width: calc(40px * 3);
-  height: calc(40px * 1);
-}
-
-#ship-3-vertical {
-  width: calc(40px * 1);
-  height: calc(40px * 3);
-}
-
-#ship-4 {
-  width: calc(40px * 4);
-  height: calc(40px * 1);
-}
-
-#ship-4#vertical {
-  width: calc(40px * 1);
-  height: calc(40px * 4);
-}
-
-.container {
+input[type=text] {
+  all: unset;
   border: 1px solid black;
-  height: 400px;
-  width: 400px;
+  padding: 10px;
+  border-radius: 30px;
+  box-shadow: 1px 1px 2px;
 }
 
-.dragging {
-  display: none;
-  pointer-events: none;
-}
 
-.modal-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.answer {
-  display: none;
-}
-
-.modalBtn-showAnswer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-button-container {
-  display: none;
-  gap: 15px;
-}

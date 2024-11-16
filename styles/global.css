@@ -1,1 +1,23 @@
 @import url("index.css");
+@import url("modal.css");
+
+* {
+  font-weight: 600;
+  font-size: 20pt;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: url("../assets/imgs/background.avif");
+  height: 100vh;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
