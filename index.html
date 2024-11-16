@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/global.css">
+</head>
+<body>
+    <div class="modalBackground">
+        <div class="modalActive">
+            <div class="modalClose">
+              <img src="assets/svg/modalCross.svg" onclick="closeModal()">
+            </div>
+            <div class="modal-container">
+              <p class="question"></p>
+          
+              <fieldset>
+                <div>
+                  <input type="radio" class="option" id="option1" name="question" value="0" />
+                  <label for="option1"></label>
+                </div>
+                <div>
+                  <input type="radio" class="option" id="option2" name="question" value="1" />
+                  <label for="option2"></label>
+                </div>
+                <div>
+                  <input type="radio" class="option" id="option3" name="question" value="2" />
+                  <label for="option3"></label>
+                </div>
+                <div>
+                  <input type="radio" class="option" id="option4" name="question" value="3" />
+                  <label for="option4"></label>
+                </div>
+                <button onclick="checkAnswer()" class="checkAnswer">Ответить</button>
+              </fieldset>
+    
+              <p class="answer"></p>
+            </div>
+          </div>
+    </div>
+
+    <main class="main">
+
+    </main>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
