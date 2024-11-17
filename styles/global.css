@@ -21,3 +21,7 @@ main {
     align-items: center;
     gap: 50px;
 }
+
+.hidden {
+  display: none;
+}

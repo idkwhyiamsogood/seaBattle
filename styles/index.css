@@ -24,9 +24,10 @@ button:active {
 }
 
 .button-container {
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 25px;
   justify-content: center;
   align-items: center;
 }
@@ -79,4 +80,7 @@ input[type=text] {
   box-shadow: 1px 1px 2px;
 }
 
-
+.selected {
+  background: rgba(0, 0, 255, 0.3);
+  border: 1px solid blue;
+}

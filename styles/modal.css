@@ -11,82 +11,43 @@
 }
 
 .modalActive {
+  position: relative;
+  margin: 0 auto;
   display: none;
   background-color: white;
   border: 3px solid black;
   border-radius: 45px;
-  width: 340px;
+  width: max-content;
   height: 80vh;
-  justify-content: center;
-  align-items: center;
   gap: 15px;
 }
 
-.modalClose {
-  width: 30px;
-  height: 30px;
+.modalClose { 
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 20px;
 }
 
 .modalContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
-.container {
-  display: block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+.markContainer {
+  display: flex;
+  flex-direction: column; 
+  gap: 10px;
+  overflow: hidden;
 }
 
-.container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-  border-radius: 50%;
-}
-
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-
-.container input:checked ~ .checkmark {
-  background-color: #2196f3;
-}
-
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-.container input:checked ~ .checkmark:after {
-  display: block;
-}
-
-.container .checkmark:after {
-  top: 9px;
-  left: 9px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: white;
+.answer, .question {
+  text-align: center;
+  padding-top: 30px;
+  margin: 0 auto;
+  width: 1000px;
+  height: max-content;
 }

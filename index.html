@@ -12,34 +12,35 @@
   <div class="modalBackground" id="modal-qustions">
     <div class="modalActive" id="modal-qustions">
       <div class="modalClose">
-        <img src="assets/svg/modalCross.svg" onclick="closeModal()" width="24px" height="24px">
+        <img src="assets/svg/modalCross.svg" width="24px" height="24px">
       </div>
       <div class="modalContainer">
         <p class="question"></p>
-        <div class="modalContainer">
+
+        <div class="markContainer">
           <label class="container">
-            <input type="radio" class="option" name="question">
+            <input type="radio" class="option" name="question" value="0">
             <span class="checkmark"></span>
           </label>
           <label class="container">
-            <input type="radio" name="question" class="option">
+            <input type="radio" name="question" class="option" value="1">
             <span class="checkmark"></span>
           </label>
           <label class="container">
-            <input type="radio" name="question" class="option">
+            <input type="radio" name="question" class="option" value="2">
             <span class="checkmark"></span>
           </label>
           <label class="container">
-            <input type="radio" name="question" class="option">
+            <input type="radio" name="question" class="option" value="3">
             <span class="checkmark"></span>
           </label>
         </div>
+
+        <button class="checkAnswer">Ответить</button>
+
+        <p class="answer"></p>
+        
       </div>
-
-      <button class="checkAnswer">Ответить</button>
-
-      <p class="answer"></p>
-      
     </div>
   </div>
 
@@ -48,7 +49,9 @@
   </main>
 
   <div class="button-container">
-    <button class="createBattlefield">Создать поле</button>
+    <button class="btn" id="createBattlefield">Создать поле</button>
+    <button class="btn hidden" id="rerollBattlefield">Поменять поля</button>
+    <button class="btn hidden" id="startGame">Начать игру</button>
   </div>
   <script type="module" src="/app/notepad.js"></script>
   <script type="module" src="/app/data.js"></script>

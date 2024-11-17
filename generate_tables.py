@@ -31,10 +31,10 @@ def place_ship(matrix, ship):
 def generate_battleship_matrix():
 
     matrix = create_empty_matrix(10)
-    ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1] 
+    ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
     for ship in ships:
         place_ship(matrix, ship)
     return matrix
 
 matrices = [generate_battleship_matrix() for _ in range(20)]
-
+print(matrices)
