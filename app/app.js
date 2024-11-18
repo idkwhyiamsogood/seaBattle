@@ -5,8 +5,10 @@ let player = 0;
 let gameTables = [];
 let gameStatus = "selecting";
 
+let counter = [0, 0];
+
 // Доделать удаление вопроса который уже был выведен в модалку
-// Сделать модалку на регистрацию игроков
+// Сделать модалку на регистрацию игроков (необязательно)
 // Сделать счетчик попаданий и функцию winner()
 // Сделать так чтобы можно было рисовать на заднем фоне письки
 
@@ -118,6 +120,9 @@ function handleCellClick(cell, row, table) {
       player = player === 1 ? 0 : 1;
       toggleUntouchable();
     }
+
+    // Проверка победы после хода
+    checkWinner();
   }
 }
 
@@ -154,9 +159,14 @@ function getConnectedCells(index, subIndex) {
 
       // Добавляем соседей в стек (включая диагонали)
       for (const [dx, dy] of [
-        [-1, -1], [-1, 0], [-1, 1],
-        [0, -1],          [0, 1],
-        [1, -1], [1, 0], [1, 1]
+        [-1, -1],
+        [-1, 0],
+        [-1, 1],
+        [0, -1],
+        [0, 1],
+        [1, -1],
+        [1, 0],
+        [1, 1],
       ]) {
         const nx = x + dx;
         const ny = y + dy;
@@ -172,9 +182,14 @@ function getConnectedCells(index, subIndex) {
 
 function markSurroundingCellsAsMiss(index, subIndex, table) {
   const directions = [
-    [-1, -1], [-1, 0], [-1, 1],
-    [0, -1],          [0, 1],
-    [1, -1], [1, 0], [1, 1]
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
   ];
 
   for (let [dx, dy] of directions) {
@@ -182,11 +197,19 @@ function markSurroundingCellsAsMiss(index, subIndex, table) {
     let y = subIndex + dy;
 
     // Проверяем границы поля
-    if (x >= 0 && x < gameTables[player].length && y >= 0 && y < gameTables[player][x].length) {
+    if (
+      x >= 0 &&
+      x < gameTables[player].length &&
+      y >= 0 &&
+      y < gameTables[player][x].length
+    ) {
       let surroundingRow = table.rows[x + 1]; // +1 из-за заголовка таблицы
       let surroundingCell = surroundingRow.cells[y + 1]; // +1 из-за заголовка строки
 
-      if (!surroundingCell.classList.contains("hit") && !surroundingCell.classList.contains("shot")) {
+      if (
+        !surroundingCell.classList.contains("hit") &&
+        !surroundingCell.classList.contains("shot")
+      ) {
         surroundingCell.classList.add("miss");
       }
     }
@@ -236,9 +259,8 @@ function getUserInput(cell, random, currentQuiz) {
   });
   document.querySelector(".checkAnswer").style.display = "none";
 
-  const selectedOption = document.querySelector(
-    'input[name="question"]:checked'
-  );
+  let selectedOption = document.querySelector('input[name="question"]:checked');
+
   if (!selectedOption) {
     return;
   }
@@ -246,23 +268,23 @@ function getUserInput(cell, random, currentQuiz) {
   const correctAnswer = currentQuiz[random].answer;
   console.log(correctAnswer, parseInt(selectedOption.value));
 
-  if (selectedOption) {
-    if (parseInt(selectedOption.value) === correctAnswer) {
-      cell.classList.add("hit");
-    } else {
-      cell.classList.add("shot");
-    }
+  if (parseInt(selectedOption.value) === correctAnswer) {
+    cell.classList.add("hit");
+    selectedOption = NaN;
+  } else {
+    cell.classList.add("shot");
   }
-  
+
   if (answerTextElem) {
     answerTextElem.textContent = currentQuiz[random].answerText;
   }
-  
+
   document.querySelector(".modalClose").style.display = "block";
   setTimeout(() => clearAnswer(), 4999);
   setTimeout(() => closeModal(), 5000);
 }
 
+// Удаляем из данных вопрос который только что задавался
 function clearAnswer() {
   answerTextElem.textContent = "";
 }
@@ -301,9 +323,9 @@ function createBattlefields() {
   createBattlefield();
   createBattlefield();
   document.querySelector("#createBattlefield").style.display = "none";
-  document.querySelectorAll(".btn.hidden").forEach((btn => {
+  document.querySelectorAll(".btn.hidden").forEach((btn) => {
     btn.classList.remove("hidden");
-  }))
+  });
   getPlacementShip();
 }
 
@@ -313,6 +335,39 @@ function startGame() {
   toggleUntouchable();
   clearTable();
   document.querySelector(".button-container").style.display = "none";
+  1;
+
+  if (gameStatus === "game-over") {
+    setTimeout(() => reloadPage, 5000);
+  }
+}
+
+function reloadPage() {
+  location.reload();
+}
+
+function checkWinner() {
+  // Проверяем каждую таблицу игрока
+  const tables = document.querySelectorAll(".battlefield");
+  tables.forEach((table, index) => {
+    // Подсчитываем количество клеток с классами hit или shot
+    const hitCells = table.querySelectorAll(".hit").length;
+    const shotCells = table.querySelectorAll(".shot").length;
+
+    if (hitCells + shotCells >= 20) {
+      // Если условие выполнено, вызываем функцию победителя
+      winner(index);
+    }
+  });
+}
+
+function winner(teamIndex) {
+  // Логика победы
+  alert(`Команда ${teamIndex + 1} победила!`);
+  gameStatus = "game-over"; // Завершаем игру
+  document.querySelectorAll(".battlefield td").forEach((cell) => {
+    cell.removeEventListener("click", handleCellClick); // Удаляем обработчики кликов
+  });
 }
 
 function rerollBattlefield() {
@@ -328,6 +383,6 @@ window.onload = () => {
   document
     .querySelector("#rerollBattlefield")
     .addEventListener("click", rerollBattlefield);
-  document.querySelector(".modalClose").addEventListener("click", closeModal)
+  document.querySelector(".modalClose").addEventListener("click", closeModal);
   document.querySelector("#startGame").addEventListener("click", startGame);
 };
