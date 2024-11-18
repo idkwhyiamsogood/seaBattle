@@ -1,5 +1,8 @@
 import { tables } from "./matrixData.js";
-import { quiz1, quiz2 } from "../app/data.js";
+import * as quizData from "../app/data.js";
+
+let quiz_1 = quizData.quiz1;
+let quiz_2 = quizData.quiz2;
 
 let player = 0;
 let gameTables = [];
@@ -11,6 +14,9 @@ let counter = [0, 0];
 // Сделать модалку на регистрацию игроков (необязательно)
 // Сделать счетчик попаданий и функцию winner()
 // Сделать так чтобы можно было рисовать на заднем фоне письки
+
+var clearTextArea ;
+var closeModalWhenTimeOut;
 
 function matrixGenerator() {
   var randomValue = Math.floor(Math.random() * tables.length);
@@ -229,10 +235,11 @@ function fillInput(cell) {
   });
   document.querySelector(".checkAnswer").style.display = "block";
 
-  let currentQuiz = player === 1 ? quiz1 : quiz2;
-  console.log(currentQuiz);
+  let currentQuiz = player === 1 ? quiz_1 : quiz_2;
   let random = Math.floor(Math.random() * currentQuiz.length);
 
+  console.log(currentQuiz[random]);
+  
   const questionElem = document.querySelector(".question");
   if (!questionElem) {
     return;
@@ -247,19 +254,20 @@ function fillInput(cell) {
 
   const checkAnswerBtn = document.querySelector(".checkAnswer");
   if (checkAnswerBtn) {
-    checkAnswerBtn.onclick = () => getUserInput(cell, random, currentQuiz);
+    checkAnswerBtn.onclick = () =>
+      getUserInput(cell, random, currentQuiz, player);
   }
 }
 
 const answerTextElem = document.querySelector(".answer");
 
-function getUserInput(cell, random, currentQuiz) {
+function getUserInput(cell, random, currentQuiz, player) {
+  let selectedOption = document.querySelector('input[name="question"]:checked');
+
   document.querySelectorAll(".container").forEach((container) => {
     container.style.display = "none";
   });
   document.querySelector(".checkAnswer").style.display = "none";
-
-  let selectedOption = document.querySelector('input[name="question"]:checked');
 
   if (!selectedOption) {
     return;
@@ -270,7 +278,7 @@ function getUserInput(cell, random, currentQuiz) {
 
   if (parseInt(selectedOption.value) === correctAnswer) {
     cell.classList.add("hit");
-    selectedOption = NaN;
+    updateCounter();
   } else {
     cell.classList.add("shot");
   }
@@ -280,11 +288,18 @@ function getUserInput(cell, random, currentQuiz) {
   }
 
   document.querySelector(".modalClose").style.display = "block";
-  setTimeout(() => clearAnswer(), 4999);
-  setTimeout(() => closeModal(), 5000);
+  clearTextArea = setTimeout(() => clearAnswer(), 4500);
+  closeModalWhenTimeOut = setTimeout(() => closeModal(), 5000);
+
+  if (player === 0) {
+    quiz_1.splice(random, 1);
+  } else {
+    quiz_2.splice(random, 1);
+  }
+
+  console.log(quiz_1.length, quiz_2.length);
 }
 
-// Удаляем из данных вопрос который только что задавался
 function clearAnswer() {
   answerTextElem.textContent = "";
 }
@@ -303,6 +318,14 @@ function toggleUntouchable() {
   });
 }
 
+function updateCounter() {
+  if (player === 1) {
+    counter[1]++;
+  } else {
+    counter[0]++;
+  }
+}
+
 function showModal(modalId) {
   document.querySelectorAll(modalId).forEach((modal) => {
     modal.style.display = "block";
@@ -310,6 +333,14 @@ function showModal(modalId) {
 }
 
 function closeModal() {
+  document.querySelectorAll('input[name="question"]:checked').forEach((item) => {
+    item.checked = false;
+  });
+
+  clearTimeout(closeModalWhenTimeOut);
+  clearTimeout(clearTextArea);
+  clearAnswer();
+
   document.querySelectorAll(".modalBackground").forEach((modal) => {
     modal.style.display = "none";
   });
@@ -323,8 +354,10 @@ function createBattlefields() {
   createBattlefield();
   createBattlefield();
   document.querySelector("#createBattlefield").style.display = "none";
-  document.querySelectorAll(".btn.hidden").forEach((btn) => {
-    btn.classList.remove("hidden");
+  document.querySelectorAll(".btn.hidden").forEach((btn, index) => {
+    if (index < 2) {
+      btn.classList.remove("hidden");
+    }
   });
   getPlacementShip();
 }
@@ -336,10 +369,6 @@ function startGame() {
   clearTable();
   document.querySelector(".button-container").style.display = "none";
   1;
-
-  if (gameStatus === "game-over") {
-    setTimeout(() => reloadPage, 5000);
-  }
 }
 
 function reloadPage() {
@@ -348,17 +377,11 @@ function reloadPage() {
 
 function checkWinner() {
   // Проверяем каждую таблицу игрока
-  const tables = document.querySelectorAll(".battlefield");
-  tables.forEach((table, index) => {
-    // Подсчитываем количество клеток с классами hit или shot
-    const hitCells = table.querySelectorAll(".hit").length;
-    const shotCells = table.querySelectorAll(".shot").length;
-
-    if (hitCells + shotCells >= 20) {
-      // Если условие выполнено, вызываем функцию победителя
-      winner(index);
-    }
-  });
+  if (quiz_1.length === 0) {
+    winner(0);
+  } else if (quiz_2.length === 0) {
+    winner(1);
+  }
 }
 
 function winner(teamIndex) {
@@ -368,6 +391,8 @@ function winner(teamIndex) {
   document.querySelectorAll(".battlefield td").forEach((cell) => {
     cell.removeEventListener("click", handleCellClick); // Удаляем обработчики кликов
   });
+
+  document.querySelector("#resetGame").classList.remove("hidden");
 }
 
 function rerollBattlefield() {
@@ -385,4 +410,5 @@ window.onload = () => {
     .addEventListener("click", rerollBattlefield);
   document.querySelector(".modalClose").addEventListener("click", closeModal);
   document.querySelector("#startGame").addEventListener("click", startGame);
+  document.querySelector("#resetGame").addEventListener("click", reloadPage);
 };

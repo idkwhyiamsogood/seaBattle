@@ -1,4 +1,4 @@
-export const quiz1 = [
+export let quiz1 = [
   {
     title: "Как связаны Конституция РФ и космос?",
     options: [
@@ -227,7 +227,7 @@ export const quiz1 = [
   },
 ];
 
-export const quiz2 = [
+export let quiz2 = [
   {
     title:
       "Каким образом президент Российской Федерации может быть отстранён от должности?",
