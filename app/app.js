@@ -126,9 +126,6 @@ function handleCellClick(cell, row, table) {
       player = player === 1 ? 0 : 1;
       toggleUntouchable();
     }
-
-    // Проверка победы после хода
-    checkWinner();
   }
 }
 
@@ -235,11 +232,11 @@ function fillInput(cell) {
   });
   document.querySelector(".checkAnswer").style.display = "block";
 
-  let currentQuiz = player === 1 ? quiz_1 : quiz_2;
+  let currentQuiz = player === 0 ? quiz_1 : quiz_2;
   let random = Math.floor(Math.random() * currentQuiz.length);
 
   console.log(currentQuiz[random]);
-  
+
   const questionElem = document.querySelector(".question");
   if (!questionElem) {
     return;
@@ -264,14 +261,14 @@ const answerTextElem = document.querySelector(".answer");
 function getUserInput(cell, random, currentQuiz, player) {
   let selectedOption = document.querySelector('input[name="question"]:checked');
 
+  if (!selectedOption) {
+    return;
+  }
+
   document.querySelectorAll(".container").forEach((container) => {
     container.style.display = "none";
   });
   document.querySelector(".checkAnswer").style.display = "none";
-
-  if (!selectedOption) {
-    return;
-  }
 
   const correctAnswer = currentQuiz[random].answer;
   console.log(correctAnswer, parseInt(selectedOption.value));
@@ -297,6 +294,7 @@ function getUserInput(cell, random, currentQuiz, player) {
     quiz_2.splice(random, 1);
   }
 
+  checkWinner();
   console.log(quiz_1.length, quiz_2.length);
 }
 
@@ -377,10 +375,12 @@ function reloadPage() {
 
 function checkWinner() {
   // Проверяем каждую таблицу игрока
-  if (quiz_1.length === 0) {
-    winner(0);
-  } else if (quiz_2.length === 0) {
-    winner(1);
+  if (quiz_1.length === 0 || quiz_2.length === 0) {
+    if (counter[0] > counter[1]) {
+      winner(0);
+    } else {
+      winner(1);
+    }
   }
 }
 
