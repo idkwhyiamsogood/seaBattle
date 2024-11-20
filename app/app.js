@@ -400,12 +400,10 @@ function winner(teamIndex) {
 
   document.querySelector("#showWinnerClose").style.display = "block";
   document.querySelector("#showWinnerText").innerHTML += `${teamIndex + 1}!`;
-  console.log(counter);
   counter.sort(function(a, b) {
     return a - b;
   });
-  console.log(counter);
-  document.querySelector("#winnerCounter").innerHTML = `Со счетом ${counter[1]} против ${counter[0]}`;
+  document.querySelector("#winnerCounter").innerHTML = `Со счетом ${counter[0]} против ${counter[1]}`;
 }
 
 function rerollBattlefield() {
