@@ -399,8 +399,11 @@ function winner(teamIndex) {
   showModal("#showWinner");
 
   document.querySelector("#showWinnerClose").style.display = "block";
-  document.querySelector("#showWinnerText").innerHTML += `${teamIndex}!`;
-  document.querySelector("#winnerCounter").innerHTML = `Со счетом ${counter[0]} против ${counter[1]}`;
+  document.querySelector("#showWinnerText").innerHTML += `${teamIndex + 1}!`;
+  counter.sort(function(a, b) {
+    return a - b;
+  });
+  document.querySelector("#winnerCounter").innerHTML = `Со счетом ${counter[1]} против ${counter[0]}`;
 }
 
 function rerollBattlefield() {
