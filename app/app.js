@@ -15,7 +15,7 @@ let counter = [0, 0];
 // Сделать счетчик попаданий и функцию winner()
 // Сделать так чтобы можно было рисовать на заднем фоне письки
 
-var clearTextArea ;
+var clearTextArea;
 var closeModalWhenTimeOut;
 
 function matrixGenerator() {
@@ -331,9 +331,11 @@ function showModal(modalId) {
 }
 
 function closeModal() {
-  document.querySelectorAll('input[name="question"]:checked').forEach((item) => {
-    item.checked = false;
-  });
+  document
+    .querySelectorAll('input[name="question"]:checked')
+    .forEach((item) => {
+      item.checked = false;
+    });
 
   clearTimeout(closeModalWhenTimeOut);
   clearTimeout(clearTextArea);
@@ -365,8 +367,9 @@ function startGame() {
   player = 1;
   toggleUntouchable();
   clearTable();
-  document.querySelector(".button-container").style.display = "none";
-  1;
+  document.querySelectorAll(".btn").forEach((btn) => {
+    btn.style.display = "none";
+  });
 }
 
 function reloadPage() {
@@ -386,13 +389,17 @@ function checkWinner() {
 
 function winner(teamIndex) {
   // Логика победы
-  alert(`Команда ${teamIndex + 1} победила!`);
-  gameStatus = "game-over"; // Завершаем игру
-  document.querySelectorAll(".battlefield td").forEach((cell) => {
-    cell.removeEventListener("click", handleCellClick); // Удаляем обработчики кликов
+  closeModal("#modal-questions");
+  document.querySelectorAll(".battlefield").forEach((table) => {
+    table.style.display = "none";
   });
 
-  document.querySelector("#resetGame").classList.remove("hidden");
+  document.querySelector("#resetGame").style.display = "block";
+
+  showModal("#showWinner");
+
+  document.querySelector("#showWinnerClose").style.display = "block";
+  document.querySelector("#showWinnerText").innerHTML += `${teamIndex}!`;
 }
 
 function rerollBattlefield() {
@@ -408,7 +415,9 @@ window.onload = () => {
   document
     .querySelector("#rerollBattlefield")
     .addEventListener("click", rerollBattlefield);
-  document.querySelector(".modalClose").addEventListener("click", closeModal);
+  document.querySelectorAll(".modalClose").forEach((close) => {
+    close.addEventListener("click", closeModal);
+  });
   document.querySelector("#startGame").addEventListener("click", startGame);
   document.querySelector("#resetGame").addEventListener("click", reloadPage);
 };

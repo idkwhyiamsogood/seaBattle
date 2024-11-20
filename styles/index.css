@@ -84,3 +84,7 @@ input[type=text] {
   background: rgba(0, 0, 255, 0.3);
   border: 1px solid blue;
 }
+
+#resetGame {
+  display: none;
+}
