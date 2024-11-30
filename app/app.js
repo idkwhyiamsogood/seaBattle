@@ -226,6 +226,7 @@ function getTableCell(table, x, y) {
 
 function fillInput(cell) {
   document.querySelector(".modalClose").style.display = "none";
+  document.querySelector(".modal-span").innerHTML = "Варианты ответа:";
 
   document.querySelectorAll(".container").forEach((container) => {
     container.style.display = "block";
@@ -244,8 +245,11 @@ function fillInput(cell) {
 
   questionElem.textContent = currentQuiz[random].title;
   document.querySelectorAll(".checkmark").forEach((input, index) => {
-    if (currentQuiz[random].options[index]) {
+    if (index <= currentQuiz[random].options.length ) {
+      document.querySelectorAll('.option')[index].style.display = "flex";
       input.textContent = currentQuiz[random].options[index];
+    } else {
+      document.querySelectorAll('.option')[index].style.display = "none";
     }
   });
 
@@ -263,12 +267,14 @@ function getUserInput(cell, random, currentQuiz, player) {
 
   if (!selectedOption) {
     return;
-  }
+  } 
 
-  document.querySelectorAll(".container").forEach((container) => {
+  document.querySelectorAll(".container").forEach((container, index) => {
+    document.querySelectorAll('.option')[index].style.display = "none";
     container.style.display = "none";
   });
   document.querySelector(".checkAnswer").style.display = "none";
+  document.querySelector(".modal-span").innerHTML = "Правильный ответ:";
 
   const correctAnswer = currentQuiz[random].answer;
   console.log(correctAnswer, parseInt(selectedOption.value));

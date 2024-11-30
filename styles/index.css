@@ -68,10 +68,6 @@ td:hover {
   background-color: rgba(0, 0, 0, 0.4); /* Цвет при наведении */
 }
 
-label {
-  text-align: center;
-}
-
 input[type=text] {
   all: unset;
   border: 1px solid black;
@@ -81,8 +77,8 @@ input[type=text] {
 }
 
 .selected {
-  background: rgba(0, 0, 255, 0.3);
-  border: 1px solid blue;
+  background: rgba(0, 0, 230, 0.6);
+  border: 1px solid rgb(0, 0, 110);
 }
 
 #resetGame {

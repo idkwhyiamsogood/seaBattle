@@ -9,9 +9,12 @@
 body {
   font-family: Arial, sans-serif;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   overflow: hidden;
-  background: url("../assets/imgs/bg-2.jpg");
+  background-image: url("../assets/imgs/bg-2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100vh;
 }
 

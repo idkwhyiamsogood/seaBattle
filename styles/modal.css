@@ -18,8 +18,8 @@
   border: 3px solid black;
   border-radius: 45px;
   width: max-content;
-  height: 80vh;
   gap: 15px;
+  color: #00009a;
 }
 
 .modalClose { 
@@ -35,13 +35,20 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  color: #00009a;
 }
 
 .markContainer {
   display: flex;
   flex-direction: column; 
   gap: 10px;
-  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: center;
+  align-items: center;
 }
 
 .answer, .question {
@@ -50,4 +57,17 @@
   margin: 0 auto;
   width: 1000px;
   height: max-content;
+  color: #00009a;
+}
+
+.modal-span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #00009a;
+  font-weight: 700;
+}
+
+.option {
+  display: none;
 }
