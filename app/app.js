@@ -73,7 +73,7 @@ function getPlacementShip() {
 }
 
 function createBattlefield() {
-  const tableArr = [" ", "А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "К"];
+  const tableArr = [" ", "А", "Б", "В", "Г", "Д", "Е", "Ж", "З", "И", "К"];
   const table = document.createElement("table");
   table.classList.add("battlefield");
   table.id = player; // Устанавливаем id текущего поля (для каждой команды)

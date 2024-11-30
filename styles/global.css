@@ -11,7 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: url("../assets/imgs/bg.webp") repeat center;
+  background: url("../assets/imgs/bg-2.jpg");
   height: 100vh;
 }
 
