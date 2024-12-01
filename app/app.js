@@ -11,14 +11,8 @@ const shuffledQuiz = shuffleArray(quiz);
 let quiz_1 = shuffledQuiz.slice(0, 20);
 let quiz_2 = shuffledQuiz.slice(20, 40);
 
-// Если исходный массив `quiz` содержит менее 40 элементов, обработаем это отдельно
-if (quiz.length < 40) {
-    throw new Error("В массиве quiz должно быть как минимум 40 элементов!");
-}
-
 console.log("Quiz 1:", quiz_1);
 console.log("Quiz 2:", quiz_2);
-
 
 let player = 0;
 let gameTables = [];
