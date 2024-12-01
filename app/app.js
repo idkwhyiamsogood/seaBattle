@@ -395,7 +395,7 @@ function checkWinner() {
   // Проверяем каждую таблицу игрока
   if (quiz_1.length === 0 || quiz_2.length === 0) {
     if (counter[0] > counter[1]) {
-      winner(0);
+      winner(2);
     } else {
       winner(1);
     }
@@ -414,7 +414,7 @@ function winner(teamIndex) {
   showModal("#showWinner");
 
   document.querySelector("#showWinnerClose").style.display = "block";
-  document.querySelector("#showWinnerText").innerHTML += `${teamIndex + 1}!`;
+  document.querySelector("#showWinnerText").innerHTML += `${teamIndex}!`;
   console.log(counter);
   document.querySelector("#winnerCounter").innerHTML = `Со счетом ${Math.max(...counter)} против ${Math.min(...counter)}`;
 }
