@@ -244,13 +244,17 @@ function fillInput(cell) {
   }
 
   questionElem.textContent = currentQuiz[random].title;
-  document.querySelectorAll(".checkmark").forEach((input, index) => {
-    if (index <= currentQuiz[random].options.length ) {
-      document.querySelectorAll('.option')[index].style.display = "flex";
-      input.textContent = currentQuiz[random].options[index];
-    } else {
-      document.querySelectorAll('.option')[index].style.display = "none";
-    }
+
+  // Удаляем старые input
+  document.querySelectorAll(".markContainer label").forEach((elem) => elem.remove());
+
+  // Добавляем новые
+  currentQuiz[random].options.forEach((option, i) => {
+    const item = `<label class="container" for="question">
+            <input type="radio" style="display: initial;" class="option" name="question" value="${i}">
+            <span class="checkmark">${option}</span>
+          </label>`;
+    document.querySelector(".markContainer").innerHTML += item;
   });
 
   const checkAnswerBtn = document.querySelector(".checkAnswer");
