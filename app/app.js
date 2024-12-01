@@ -1,19 +1,30 @@
 import { tables } from "./matrixData.js";
 import * as quizData from "../app/data.js";
 
-let quiz_1 = quizData.quiz1;
-let quiz_2 = quizData.quiz2;
+const quiz = quizData.quiz;
+
+function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+const shuffledQuiz = shuffleArray(quiz);
+let quiz_1 = shuffledQuiz.slice(0, 20);
+let quiz_2 = shuffledQuiz.slice(20, 40);
+
+// Если исходный массив `quiz` содержит менее 40 элементов, обработаем это отдельно
+if (quiz.length < 40) {
+    throw new Error("В массиве quiz должно быть как минимум 40 элементов!");
+}
+
+console.log("Quiz 1:", quiz_1);
+console.log("Quiz 2:", quiz_2);
+
 
 let player = 0;
 let gameTables = [];
 let gameStatus = "selecting";
 
 let counter = [0, 0];
-
-// Доделать удаление вопроса который уже был выведен в модалку
-// Сделать модалку на регистрацию игроков (необязательно)
-// Сделать счетчик попаданий и функцию winner()
-// Сделать так чтобы можно было рисовать на заднем фоне письки
 
 var clearTextArea;
 var closeModalWhenTimeOut;
@@ -295,7 +306,7 @@ function getUserInput(cell, random, currentQuiz, player) {
   }
 
   document.querySelector(".modalClose").style.display = "block";
-  clearTextArea = setTimeout(() => clearAnswer(), 4500);
+  clearTextArea = setTimeout(() => clearAnswer(), 4800);
   closeModalWhenTimeOut = setTimeout(() => closeModal(), 5000);
 
   if (player === 0) {

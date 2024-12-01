@@ -1,4 +1,5 @@
 import random
+# Хз почему на js пробовал переписывать не работает...
 
 def create_empty_matrix(size):
     return [[0 for _ in range(size)] for _ in range(size)]

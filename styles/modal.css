@@ -17,6 +17,7 @@
   background-color: white;
   border: 3px solid black;
   border-radius: 45px;
+  min-height: 80vh;
   width: max-content;
   gap: 15px;
   color: #00009a;
