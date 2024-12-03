@@ -4,12 +4,19 @@ import * as quizData from "../app/data.js";
 const quiz = quizData.quiz;
 
 function shuffleArray(array) {
-    return array.sort(() => Math.random() - 0.5);
+  return array.sort(() => Math.random() - 0.5);
 }
 
 const shuffledQuiz = shuffleArray(quiz);
 let quiz_1 = shuffledQuiz.slice(0, 20);
 let quiz_2 = shuffledQuiz.slice(20, 40);
+
+if (quiz_1.length != 20 || quiz_2.length != 20) {
+  const shuffledQuiz = shuffleArray(quiz);
+  let quiz_1 = shuffledQuiz.slice(0, 20);
+  let quiz_2 = shuffledQuiz.slice(20, 40);
+  console.log("Не получилось с первого раза")
+}
 
 console.log("Quiz 1:", quiz_1);
 console.log("Quiz 2:", quiz_2);
@@ -81,6 +88,11 @@ function createBattlefield() {
   const tableArr = [" ", "А", "Б", "В", "Г", "Д", "Е", "Ж", "З", "И", "К"];
   const table = document.createElement("table");
   table.classList.add("battlefield");
+
+  let caption = document.createElement("caption");
+  caption.innerHTML = `Команда ${player + 1}`;
+  table.appendChild(caption);
+
   table.id = player; // Устанавливаем id текущего поля (для каждой команды)
   player++;
 
@@ -251,7 +263,9 @@ function fillInput(cell) {
   questionElem.textContent = currentQuiz[random].title;
 
   // Удаляем старые input
-  document.querySelectorAll(".markContainer label").forEach((elem) => elem.remove());
+  document
+    .querySelectorAll(".markContainer label")
+    .forEach((elem) => elem.remove());
 
   // Добавляем новые
   currentQuiz[random].options.forEach((option, i) => {
@@ -276,10 +290,10 @@ function getUserInput(cell, random, currentQuiz, player) {
 
   if (!selectedOption) {
     return;
-  } 
+  }
 
   document.querySelectorAll(".container").forEach((container, index) => {
-    document.querySelectorAll('.option')[index].style.display = "none";
+    document.querySelectorAll(".option")[index].style.display = "none";
     container.style.display = "none";
   });
   document.querySelector(".checkAnswer").style.display = "none";
@@ -416,7 +430,9 @@ function winner(teamIndex) {
   document.querySelector("#showWinnerClose").style.display = "block";
   document.querySelector("#showWinnerText").innerHTML += `${teamIndex}!`;
   console.log(counter);
-  document.querySelector("#winnerCounter").innerHTML = `Со счетом ${Math.max(...counter)} против ${Math.min(...counter)}`;
+  document.querySelector("#winnerCounter").innerHTML = `Со счетом ${Math.max(
+    ...counter
+  )} против ${Math.min(...counter)}`;
 }
 
 function rerollBattlefield() {

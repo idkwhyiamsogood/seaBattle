@@ -26,6 +26,15 @@ main {
     gap: 50px;
 }
 
+caption {
+  color: black;
+  font-size: 24pt;
+}
+
+.gameArea {
+  display: flex;
+}
+
 .hidden {
   display: none;
 }
