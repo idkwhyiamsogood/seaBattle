@@ -72,3 +72,11 @@
 .option {
   display: none;
 }
+
+.timer {
+  font-size: 36pt;
+  padding: 0;
+  margin: 0;
+  height: max-content;
+  width: max-content;
+}

@@ -281,11 +281,40 @@ function fillInput(cell) {
     checkAnswerBtn.onclick = () =>
       getUserInput(cell, random, currentQuiz, player);
   }
+
+  startTimer(1, cell);
 }
 
 const answerTextElem = document.querySelector(".answer");
 
+function startTimer(minutes, cell) {
+  const timerElement = document.querySelector('.timer');
+  let secondsRemaining = minutes * 60;
+
+  const interval = setInterval(() => {
+    // Рассчитываем минуты и секунды
+    const minutesLeft = Math.floor(secondsRemaining / 60);
+    const secondsLeft = secondsRemaining % 60;
+
+    // Обновляем содержимое элемента с классом "timer"
+    timerElement.innerHTML = `${minutesLeft < 10 ? '0' : ''}${minutesLeft}:${secondsLeft < 10 ? '0' : ''}${secondsLeft}`;
+
+    // Уменьшаем оставшиеся секунды
+    secondsRemaining--;
+    console.log(secondsRemaining);
+    // Проверяем, достигли ли нуля
+    if (secondsRemaining <= 0) {
+      clearInterval(interval); // Останавливаем таймер
+      cell.classList.add('shot'); // Добавляем класс
+      closeModal(); // Закрываем модальное окно
+      alert('Время вышло!'); // Показываем сообщение
+      return; // Завершаем выполнение функции
+    }
+  }, 1000);
+}
+
 function getUserInput(cell, random, currentQuiz, player) {
+  clearInterval(interval);
   let selectedOption = document.querySelector('input[name="question"]:checked');
 
   if (!selectedOption) {
@@ -368,6 +397,7 @@ function closeModal() {
 
   clearTimeout(closeModalWhenTimeOut);
   clearTimeout(clearTextArea);
+  clearInterval(interval);
   clearAnswer();
 
   document.querySelectorAll(".modalBackground").forEach((modal) => {
