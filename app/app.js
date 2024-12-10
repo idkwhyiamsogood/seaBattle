@@ -15,7 +15,7 @@ if (quiz_1.length != 20 || quiz_2.length != 20) {
   const shuffledQuiz = shuffleArray(quiz);
   let quiz_1 = shuffledQuiz.slice(0, 20);
   let quiz_2 = shuffledQuiz.slice(20, 40);
-  console.log("Не получилось с первого раза")
+  console.log("Не получилось с первого раза");
 }
 
 console.log("Quiz 1:", quiz_1);
@@ -241,6 +241,8 @@ function getTableCell(table, x, y) {
   return row ? row.cells[y + 1] : null; // +1 из-за заголовка строки
 }
 
+const timerElement = document.querySelector(".timer");
+
 function fillInput(cell) {
   document.querySelector(".modalClose").style.display = "none";
   document.querySelector(".modal-span").innerHTML = "Варианты ответа:";
@@ -276,20 +278,7 @@ function fillInput(cell) {
     document.querySelector(".markContainer").innerHTML += item;
   });
 
-  const checkAnswerBtn = document.querySelector(".checkAnswer");
-  if (checkAnswerBtn) {
-    checkAnswerBtn.onclick = () =>
-      getUserInput(cell, random, currentQuiz, player);
-  }
-
-  startTimer(1, cell);
-}
-
-const answerTextElem = document.querySelector(".answer");
-
-function startTimer(minutes, cell) {
-  const timerElement = document.querySelector('.timer');
-  let secondsRemaining = minutes * 60;
+  let secondsRemaining = 1 * 60;
 
   const interval = setInterval(() => {
     // Рассчитываем минуты и секунды
@@ -297,29 +286,41 @@ function startTimer(minutes, cell) {
     const secondsLeft = secondsRemaining % 60;
 
     // Обновляем содержимое элемента с классом "timer"
-    timerElement.innerHTML = `${minutesLeft < 10 ? '0' : ''}${minutesLeft}:${secondsLeft < 10 ? '0' : ''}${secondsLeft}`;
+    timerElement.innerHTML = `${minutesLeft < 10 ? "0" : ""}${minutesLeft}:${
+      secondsLeft < 10 ? "0" : ""
+    }${secondsLeft}`;
 
     // Уменьшаем оставшиеся секунды
     secondsRemaining--;
-    console.log(secondsRemaining);
     // Проверяем, достигли ли нуля
-    if (secondsRemaining <= 0) {
+    if (secondsRemaining <= -1) {
+      timerElement.innerHTML = "";
       clearInterval(interval); // Останавливаем таймер
-      cell.classList.add('shot'); // Добавляем класс
+      cell.classList.add("shot"); // Добавляем класс
       closeModal(); // Закрываем модальное окно
-      alert('Время вышло!'); // Показываем сообщение
+      alert("Время вышло!"); // Показываем сообщение
       return; // Завершаем выполнение функции
     }
   }, 1000);
+
+  const checkAnswerBtn = document.querySelector(".checkAnswer");
+  if (checkAnswerBtn) {
+    checkAnswerBtn.onclick = () =>
+      getUserInput(cell, random, currentQuiz, player, interval);
+  }
 }
 
-function getUserInput(cell, random, currentQuiz, player) {
-  clearInterval(interval);
+const answerTextElem = document.querySelector(".answer");
+
+function getUserInput(cell, random, currentQuiz, player, interval) {
   let selectedOption = document.querySelector('input[name="question"]:checked');
 
   if (!selectedOption) {
     return;
   }
+
+  timerElement.innerHTML = ""
+  clearInterval(interval);
 
   document.querySelectorAll(".container").forEach((container, index) => {
     document.querySelectorAll(".option")[index].style.display = "none";
@@ -397,7 +398,6 @@ function closeModal() {
 
   clearTimeout(closeModalWhenTimeOut);
   clearTimeout(clearTextArea);
-  clearInterval(interval);
   clearAnswer();
 
   document.querySelectorAll(".modalBackground").forEach((modal) => {
