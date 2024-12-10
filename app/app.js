@@ -296,9 +296,19 @@ function fillInput(cell) {
     if (secondsRemaining <= -1) {
       timerElement.innerHTML = "";
       clearInterval(interval); // Останавливаем таймер
+
+      if (player === 0) {
+        quiz_1.splice(random, 1);
+      } else {
+        quiz_2.splice(random, 1);
+      }
+    
+      console.log(quiz_1.length, quiz_2.length);
+
       cell.classList.add("shot"); // Добавляем класс
       closeModal(); // Закрываем модальное окно
-      alert("Время вышло!"); // Показываем сообщение
+      alert("Время вышло!");// Показываем сообщение
+
       return; // Завершаем выполнение функции
     }
   }, 1000);
@@ -353,8 +363,8 @@ function getUserInput(cell, random, currentQuiz, player, interval) {
     quiz_2.splice(random, 1);
   }
 
-  checkWinner();
   console.log(quiz_1.length, quiz_2.length);
+  checkWinner();
 }
 
 function clearAnswer() {
