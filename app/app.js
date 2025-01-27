@@ -278,7 +278,7 @@ function fillInput(cell) {
     document.querySelector(".markContainer").innerHTML += item;
   });
 
-  let secondsRemaining = 1 * 60;
+  let secondsRemaining = 1 * 90;
 
   const interval = setInterval(() => {
     // Рассчитываем минуты и секунды
